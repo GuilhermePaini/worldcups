@@ -1,0 +1,20 @@
+version: "3"
+services:
+  db:
+    image: mysql:8
+    ports:
+      - "3306:3306"
+    volumes:
+      - /var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+
+# Backup:
+# docker exec CONTAINER /usr/bin/mysqldump -u root --password=root DATABASE > backup.sql
+
+# docker exec sis-bd2_db_1 /usr/bin/mysqldump -u root --password=123456 db_app_db2 > scripts/dump.sql
+
+# Restaurar
+# cat backup.sql | docker exec -i CONTAINER /usr/bin/mysql -u root --password=root DATABASE
+
+# cat dump.sql | docker exec -i sis-bd2_db_1 /usr/bin/mysql -u root --password=123456 db_app_db2

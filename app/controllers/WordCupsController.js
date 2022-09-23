@@ -3,23 +3,20 @@ const Match = require('../models/worldcups/Match.js');
 
 module.exports = app => {
     
-    app.get('/worldcups', async (req, res) => {
+    app.get('/worldcups/:year', async (req, res) => {
 
         try {
-            const result = await WorldCup.findAll();
-            res.status(200).json(result);
-        } catch (err) {
-            res.status(500).json({ msg: err.message }) 
-        }
-    })
+            const result = await WorldCup.findOne({
+                attributes: ['Country', 'Winner', 'RunnersUp'],
+                where: { year: req.params.year }
+            });
 
-    app.get('/matches', async (req, res) => {
-        
-        try {
-            const result = await Match.findAll();
+            if (result == null)
+                res.status(404).send("Not found");
+
             res.status(200).json(result);
         } catch (err) {
-            res.status(500).json({ msg: err.message }) 
+            res.status(500).json({ msg: err.message }); 
         }
     })
 }

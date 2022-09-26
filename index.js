@@ -1,8 +1,11 @@
 
 const express = require('express')
 const consign = require('consign');
+const bodyparser = require('body-parser');
 
 const app = express()
+
+app.use(bodyparser.json());
 
 require('dotenv').config()
 

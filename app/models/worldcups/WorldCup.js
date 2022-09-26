@@ -1,5 +1,6 @@
 const conn = require.main.require('./config/database.js');
 const { DataTypes } = require('sequelize');
+const Match = require('./Match');
 
 const WorldCup = conn.define('WorldCups', {
     Year:               { type: DataTypes.INTEGER,    allowNull: false, primaryKey: true },
@@ -16,6 +17,9 @@ const WorldCup = conn.define('WorldCups', {
     createdAt: false,
     updatedAt: false
 });
+
+WorldCup.hasMany(Match, { foreignKey: 'Year_Cup' });
+Match.belongsTo(WorldCup, { foreignKey: 'Year_Cup' });
 
 module.exports = WorldCup;
 

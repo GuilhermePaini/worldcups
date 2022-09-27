@@ -2,10 +2,12 @@
 const express = require('express')
 const consign = require('consign');
 const bodyparser = require('body-parser');
+const cors = require('cors');
 
 const app = express()
 
 app.use(bodyparser.json());
+app.use(cors());
 
 require('dotenv').config()
 

@@ -14,11 +14,11 @@ module.exports = app => {
             });
 
             if (result == null)
-                res.status(404).send("Not found");
+                return res.status(404).send("Not found");
 
-            res.status(200).json(result);
+            return res.status(200).json(result);
         } catch (err) {
-            res.status(500).json({ msg: err.message }); 
+            return res.status(500).json({ msg: err.message }); 
         }
     })
 
@@ -33,11 +33,11 @@ module.exports = app => {
             });
 
             if (result == null)
-                res.status(404).send("Not found");
+                return res.status(404).send("Not found");
 
-            res.status(200).json(result);
+            return res.status(200).json(result);
         } catch (err) {
-            res.status(500).json({ msg: err.message }); 
+            return res.status(500).json({ msg: err.message }); 
         } 
     });
     
@@ -59,7 +59,7 @@ module.exports = app => {
             });
             
             if (result.length === 0)
-                res.status(404).send("Not found");
+                return res.status(404).send("Not found");
 
             result.forEach((elem) => {
                 for (const [key, value] of Object.entries(elem.dataValues)) {
@@ -73,7 +73,7 @@ module.exports = app => {
                 delete elem.dataValues.Fourth;
             });
 
-            res.status(200).json(result);
+            return res.status(200).json(result);
         } catch(err) {
             res.status(500).json({ msg: err.message });
         }  
@@ -103,9 +103,9 @@ module.exports = app => {
             });
 
             if (result == null)
-                res.status(404).send("Not found");
+                return res.status(404).send("Not found");
 
-            res.status(200).json(result);
+            return res.status(200).json(result);
         } catch (err) {
             res.status(500).json({ msg: err.message }); 
         } 
@@ -121,9 +121,9 @@ module.exports = app => {
             if (newCup instanceof WorldCup)
                 await newCup.save();
 
-            res.status(201).json(newCup);
+            return res.status(201).json(newCup);
         } catch (err) {
-            res.status(500).json({ msg: err.message }); 
+            return res.status(500).json({ msg: err.message }); 
         }
     });
 }

@@ -7,85 +7,246 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
 
-    <title>World Cups API</title>
+    <title>FIFA WorldCups API</title>
 </head>
 
 <body id="grad">
-    <div id="app" class="container mx-auto my-3">
-        <h1 class="text-3xl font-bold underline">
-            FIFA Worldcups
-        </h1>
-        <hr />
 
-        <!--GET /worldcups/:year -->
+    <div id="app" class="row">
 
-        <div class="mb-3 row">
-            <label for="year" class="col-sm-2 col-form-label">Digite o ano da copa: </label>
-            <div class="col-sm-9">
-                <input type="number" class="form-control" v-model="year_cup" id="year" placeholder="ano da copa">
+        <div class="col-6" id="textCollumn">
+            <h1 id="title1">FIFA</h1>
+            <h2 id="title2">WORLD<br>CUP'S<br>API</h2>
+        </div>
+
+        <div class="col-6" id="cardWrapper">"
+
+            <div class="card shadow-lg" id="card">
+                <div class="card-body">
+                    <div class="alert alert-danger" v-if="message" role="alert">
+                        <p>{{ message }}</p>
+                    </div>
+                    <div class="container mx-auto my-3">
+                        <div class="accordion accordion-flush" id="accordionWrap">
+                            <div class="accordion-item" id="accordion">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button id="accordion-button" class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                        aria-expanded="false" aria-controls="flush-collapseOne">
+                                        GET - Retorna sede, vencedor, segundo lugar conforme ano informado
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingOne" data-bs-parent="#accordionWrap">
+                                    <div class="accordion-body">
+                                        <div class="mb-3 row">
+                                            <div style="margin-bottom:5px;">
+                                                <label for="year" class="col-sm-12 col-form-label">Digite o ano da copa:
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-11">
+                                                <input type="number" class="form-control" v-model="year_cup" id="year"
+                                                    placeholder="ano da copa" pattern="^[0-9]+$">
+                                            </div>
+                                            <button class="col-sm-1 btn btn-primary" @click="search(year_cup)"><i
+                                                    class="material-symbols-outlined">
+                                                    search
+                                                </i></button>
+                                        </div>
+                                        <div class="mb-3" v-if="year_info != null">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Sede</th>
+                                                        <th scope="col">Vencedor</th>
+                                                        <th scope="col">Segundo lugar</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{year_info.Country}}</td>
+                                                        <td>{{year_info.Winner}}</td>
+                                                        <td>{{year_info.RunnersUp}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item" id="accordion">
+                                <h2 class="accordion-header" id="flush-headingTwo">
+                                    <button id="accordion-button" class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
+                                        aria-expanded="false" aria-controls="flush-collapseTwo">
+                                        GET - Retorna dados das Finais conforme ano informado
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingTwo" data-bs-parent="#accordionWrap">
+                                    <div class="accordion-body">
+                                        <div class="mb-3 row">
+                                            <div style="margin-bottom:5px;">
+                                                <label for="year" class="col-sm-12 col-form-label">Digite o ano da copa:
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-11">
+                                                <input type="number" class="form-control" v-model="finals_cup" id="year"
+                                                    placeholder="ano da copa" pattern="^[0-9]+$">
+                                            </div>
+                                            <button class="col-sm-1 btn btn-primary"
+                                                @click="searchFinals(finals_cup)"><i class="material-symbols-outlined">
+                                                    search
+                                                </i></button>
+                                        </div>
+                                        <div class="mb-3" v-if="finals_info != null">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Data</th>
+                                                        <th scope="col">Estádio</th>
+                                                        <th scope="col">Times</th>
+                                                        <th scope="col">Placar</th>
+                                                        <th scope="col">Condições</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{finals_info.Datetime}}</td>
+                                                        <td>{{finals_info.Stadium}}</td>
+                                                        <td>{{finals_info.Home_Team_Name}}<b> X
+                                                            </b>{{finals_info.Away_Team_Name}}</td>
+                                                        <td>{{finals_info.Home_Team_Goals}}<b> X
+                                                            </b>{{finals_info.Away_Team_Goals}}</td>
+                                                        <td>{{finals_info.Win_conditions}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item" id="accordion">
+                                <h2 class="accordion-header" id="flush-headingThree">
+                                    <button id="accordion-button" class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
+                                        aria-expanded="false" aria-controls="flush-collapseThree">
+                                        GET - Retorna ano, sede e colocação de um país informado
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingThree" data-bs-parent="#accordionWrap">
+                                    <div class="accordion-body">
+                                        <div class="mb-3 row">
+                                            <div style="margin-bottom:5px;">
+                                                <label for="year" class="col-sm-12 col-form-label">Digite o país:
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-11">
+                                                <input type="text" class="form-control" v-model="countries_cup"
+                                                    id="year" placeholder="nome do país">
+                                            </div>
+                                            <button class="col-sm-1 btn btn-primary"
+                                                @click="searchCountries(countries_cup)"><i
+                                                    class="material-symbols-outlined">
+                                                    search
+                                                </i></button>
+                                        </div>
+                                        <div class="mb-3" v-if="countries_info != null">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Ano</th>
+                                                        <th scope="col">Sede</th>
+                                                        <th scope="col">Colocação</th>
+                                                    </tr>
+                                                </thead>
+                                                <template v-for="country in countries_info">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>{{country.Year}}</td>
+                                                            <td>{{country.Country}}</td>
+                                                            <td>{{country.Position}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </template>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item" id="accordion">
+                                <h2 class="accordion-header" id="flush-headingFour">
+                                    <button id="accordion-button" class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseFour"
+                                        aria-expanded="false" aria-controls="flush-collapseFour">
+                                        GET - Retorna detalhes completos conforme ano informado
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseFour" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingFour" data-bs-parent="#accordionWrap">
+                                    <div class="accordion-body">
+                                        <div class="mb-3 row">
+                                            <div style="margin-bottom:5px;">
+                                                <label for="year" class="col-sm-12 col-form-label">Digite o ano da copa:
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-11">
+                                                <input type="number" class="form-control" v-model="details" id="year"
+                                                    placeholder="ano da copa" pattern="^[0-9]+$" wd>
+                                            </div>
+                                            <button class="col-sm-1 btn btn-primary" @click="searchDetails(details)"><i
+                                                    class="material-symbols-outlined">
+                                                    search
+                                                </i></button>
+                                        </div>
+                                        <div class="mb-3" v-if="details_info != null">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Sede</th>
+                                                        <th scope="col">Vencedor</th>
+                                                        <th scope="col">Segundo lugar</th>
+                                                        <th scope="col">Data</th>
+                                                        <th scope="col">Estádio</th>
+                                                        <th scope="col">Placar</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{details_info.Country}}</td>
+                                                        <td>{{details_info.Winner}}</td>
+                                                        <td>{{details_info.RunnersUp}}</td>
+                                                        <td>{{details_info.Datetime}}}</td>
+                                                        <td>{{details_info.Stadium}}</td>
+                                                        <td>{{details_info.Home_Team_Goals}}<b> X
+                                                            </b>{{details_info.Away_Team_Goals}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button class="col-sm-1 btn btn-primary" @click="search(year_cup)">Pesquisar</button>
         </div>
-        <div class="mb-3" v-if="year_info != null">
-            <p><b>Sede: </b>{{year_info.Country}}</p>
-            <p><b>Vencedor: </b>{{year_info.Winner}}</p>
-            <p><b>Segundo lugar: </b>{{year_info.RunnersUp}}</p>
-        </div>
-
-        <!--GET /worldcups/finals/:year-->
-
-        <div class="mb-3 row">
-            <label for="year" class="col-sm-2 col-form-label">Digite o ano da copa: </label>
-            <div class="col-sm-9">
-                <input type="number" class="form-control" v-model="finals_cup" id="year" placeholder="ano da copa">
-            </div>
-            <button class="col-sm-1 btn btn-primary" @click="searchFinals(finals_cup)">Pesquisar</button>
-        </div>
-        <div class="mb-3" v-if="finals_info != null">
-            <p><b>Data da final: </b>{{finals_info.Datetime}}</p>
-            <p><b>Estádio da final: </b>{{finals_info.Stadium}}</p>
-            <p><b>Times na final: </b>{{finals_info.Home_Team_Name}}<b> X </b>{{finals_info.Away_Team_Name}}</p>
-            <p><b>Gols na final: </b>{{finals_info.Home_Team_Goals}}<b> X </b>{{finals_info.Away_Team_Goals}}</p>
-            <p><b>Condições da partida: </b>{{finals_info.Win_conditions}}</p>
-        </div>
-
-        <!--GET /worldcups/country/:country-->
-
-        <div class="mb-3 row">
-            <label for="year" class="col-sm-2 col-form-label">Digite o país: </label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" v-model="countries_cup" id="year" placeholder="nome do país">
-            </div>
-            <button class="col-sm-1 btn btn-primary" @click="searchCountries(countries_cup)">Pesquisar</button>
-        </div>
-        <div class="mb-3" v-if="countries_info != null">
-            <template v-for="country in countries_info">
-                <p><b>Ano: </b>{{country.Year}}</p>
-                <p><b>Sede: </b>{{country.Country}}</p>
-                <p><b>Colocação: </b>{{country.Position}}</p>
-            </template>
-        </div>
-
-        <!--GET /worldcups/details/:year-->
-
-        <div class="mb-3 row">
-            <label for="year" class="col-sm-2 col-form-label">Digite o ano da copa: </label>
-            <div class="col-sm-9">
-                <input type="number" class="form-control" v-model="details" id="year" placeholder="ano da copa">
-            </div>
-            <button class="col-sm-1 btn btn-primary" @click="searchDetails(details)">Pesquisar</button>
-        </div>
-        <div class="mb-3" v-if="details_info != null">
-            <p><b>Sede: </b>{{details_info.Country}}</p>
-            <p><b>Vencedor: </b>{{details_info.Winner}}</p>
-            <p><b>Segundo lugar: </b>{{details_info.RunnersUp}}</p>
-            <p><b>Data da final: </b>{{details_info.Datetime}}</p>
-            <p><b>Estádio da final: </b>{{details_info.Stadium}}</p>
-            <p><b>Placar da final: </b>{{details_info.Home_Team_Goals}}<b> X </b>{{details_info.Away_Team_Goals}}</p>
-        </div>
-
     </div>
 </body>
 
@@ -103,58 +264,57 @@
             countries_info: null,
             details: 1930,
             details_info: null,
+            message: null,
+            http_errors: {
+                404: "Não consegui localizar a informação solicitada.",
+                500: "Ocorreu um erro inesperado, tente novamente em alguns minutos.",
+            }
         },
 
         methods: {
             async search(year_cup) {
+
                 try {
-                    fetch(`http://localhost:3000/worldcups/${year_cup}`)
-                        .then(async (response) => {
-                            this.year_info = await this.handleResponse(response)
-                        })
-                } catch (err) {
-                    console.log(err);
+                    const response = await fetch(`http://localhost:3000/worldcups/${year_cup}`);
+                    this.year_info = await this.handleResponse(response);
+                } catch (e) {
+                    this.message = e.message;
                 }
             },
 
             async searchFinals(finals_cup) {
                 try {
-                    fetch(`http://localhost:3000/worldcups/finals/${finals_cup}`)
-                        .then(async (response) => {
-                            this.finals_info = await this.handleResponse(response)
-                        })
-                } catch (err) {
-                    console.log(err);
+                    const response = await fetch(`http://localhost:3000/worldcups/finals/${finals_cup}`)
+                    this.finals_info = await this.handleResponse(response);
+                } catch (e) {
+                    this.message = e.message;
                 }
             },
 
             async searchCountries(countries_cup) {
                 try {
-                    fetch(`http://localhost:3000/worldcups/country/${countries_cup}`)
-                        .then(async (response) => {
-                            this.countries_info = await this.handleResponse(response)
-                        })
-                } catch (err) {
-                    console.log(err);
+                    const response = await fetch(`http://localhost:3000/worldcups/country/${countries_cup}`)
+                    this.countries_info = await this.handleResponse(response);
+                } catch (e) {
+                    this.message = e.message;
                 }
             },
 
             async searchDetails(details) {
                 try {
-                    fetch(`http://localhost:3000/worldcups/details/${details}`)
-                        .then(async (response) => {
-                            this.details_info = await this.handleResponse(response)
-                        })
-                } catch (err) {
-                    console.log(err);
+                    const response = await fetch(`http://localhost:3000/worldcups/details/${details}`)
+                    this.details_info = await this.handleResponse(response);
+                } catch (e) {
+                    this.message = e.message;
                 }
             },
 
             async handleResponse(response) {
-                if (response.status > 400)
-                    return null;
-                if (response.status >= 200)
-                    return await response.json();
+                if (!response.ok) {
+                    throw new Error(response.status + ': ' + this.http_errors[response.status]);
+                }
+
+                return await response.json();
             }
         },
         computed: {

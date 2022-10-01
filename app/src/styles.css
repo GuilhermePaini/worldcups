@@ -1,3 +1,43 @@
+body {
+  overflow-x: hidden;
+}
+
+#textCollumn{
+  content: ' ';
+  left: 0;
+  top: 0;
+  opacity: 0.6;
+  max-width: 100%;
+  height: auto;
+  background-image: url('img/CUP-logo.png');
+  background-repeat: no-repeat;
+}
+
+#title1{
+  font-family: 'Alfa Slab One', cursive;
+  text-shadow: 4px 4px 30px rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 100px;
+  letter-spacing: 10px;
+}
+
+#title2{
+  font-family: 'Montserrat', sans-serif;
+  text-shadow: 4px 4px 30px rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 150px;
+  line-height: 80%;
+}
+
+#cardWrapper{
+  padding-top: 100px;
+}
+
 #grad {
-    background-image: linear-gradient(to bottom right, rgb(169, 13, 13), rgb(0, 0, 0));
+    background-image: linear-gradient(to bottom right, rgb(13, 60, 169), rgb(0, 0, 0));
+    background-position: right;
   }
+
+#app{
+  padding: 100px 100px 100px 100px;
+}

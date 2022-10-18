@@ -19,7 +19,5 @@ async function test_conn() {
         console.log("Unable to connect to database: " + err.message);
     }
 }
-
 test_conn();
-
 module.exports = sequelize;

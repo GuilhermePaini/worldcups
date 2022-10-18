@@ -13,27 +13,23 @@ module.exports = _ => {
     }
 
     const strategy = new Strategy(params, (payload, done) => {
-        User.findOne({
-            where: { username: payload.username }
-        })
-        .then(user => {
-            console.log(user);
-            if (user) {
-                return done(null, user);
-            }
-            return done(null, false);
-        })
-        .catch(error => done(error, null));
+        User.findByPk(payload)
+            .then(user => {
+                if (user) {
+                    return done(null, {
+                        id: user.id,
+                        email: user.email
+                    });
+                }
+                return done(null, false);
+            })
+            .catch(error => done(error, null));
     })
     
     passport.use(strategy)
 
     return {
-        initialize: () => {
-            return passport.initialize()
-        },
-        authenticate: () => {
-            return passport.authenticate("jwt", process.env.JWT_SESSION)
-        }
+        initialize: () => passport.initialize(),
+        authenticate: () => passport.authenticate("jwt", {session: false}),
     }
 }

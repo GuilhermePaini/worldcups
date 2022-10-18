@@ -5,6 +5,8 @@ const { Op } = require('sequelize');
 
 module.exports = app => {
 
+    app.use('/worldcups', [ app.config.auth.authenticate() ]);
+
     app.get('/worldcups/:year', async (req, res) => {
 
         try {

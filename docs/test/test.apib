@@ -1,0 +1,37 @@
+HOST: http://localhost:3000
+FORMAT: 1A
+
+# Wolrdcups API
+
+API for consuming information about worldcups.
+
+## Group Worldcups
+
+## Get winners, runnersUp and host country [/worldcups/{year_cup}]
+
+### info [GET]
+
+Get winners, runnersUp and host country of the specified year.
+
+- Response 200 (application/json)
+
+- Response 404 (application/json)
+     
+## Create Worldcup information [/worldcups]
+
+### info [POST]
+
+- Response 200 (application/json)
+    - Attributes (Wolrdcup)
+
+## Data structures
+
+### Wolrdcup
+
+- Year:         1930            (number, required)
+- Country:      Uruguay         (string, required)
+- Winner:       Uruguay         (string, required)
+- RunnersUp:    Argentina       (string, required)
+- Third:        United Statess  (string, required)
+- Fourth:       Yugoslavia      (string, required)
+- GoalsScored:  256             (number, required)
